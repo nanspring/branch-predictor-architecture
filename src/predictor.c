@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "predictor.h"
 #include "gshare.h"
+#include "tournament.h"
 
 //
 // TODO:Student Information
@@ -55,6 +56,7 @@ init_predictor()
       init_gshare();
       break;
     case TOURNAMENT:
+      init_tournament();
       break;
     case CUSTOM:
       break;
@@ -81,6 +83,7 @@ make_prediction(uint32_t pc)
     case GSHARE:
       return make_prediction_gshare(pc);
     case TOURNAMENT:
+      return make_prediction_tournament(pc);
     case CUSTOM:
     default:
       break;
@@ -105,6 +108,7 @@ train_predictor(uint32_t pc, uint8_t outcome)
     train_gshare(pc, outcome);
     break;
   case TOURNAMENT:
+    train_tournament(pc, outcome);
     break;
   case CUSTOM:
     break;
