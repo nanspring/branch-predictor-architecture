@@ -10,7 +10,7 @@ uint64_t ghistory_records;  // maximum 64 global history records
 int **perceptron_table;
 int last_output;
 
-void add_ghrecord_custom(uint8_t outcome)
+static inline void add_ghrecord(uint8_t outcome)
 {
 	uint32_t ghistory_msk;
   
@@ -90,5 +90,5 @@ void train_custom(uint32_t pc, uint8_t outcome)
 		}
 	}
 
-	add_ghrecord_custom(outcome);
+	add_ghrecord(outcome);
 }
