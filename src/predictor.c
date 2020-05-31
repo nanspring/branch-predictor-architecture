@@ -9,6 +9,7 @@
 #include "predictor.h"
 #include "gshare.h"
 #include "tournament.h"
+#include "custom.h"
 
 //
 // TODO:Student Information
@@ -30,6 +31,10 @@ int lhistoryBits; // Number of bits used for Local History
 int pcIndexBits;  // Number of bits used for PC index
 int bpType;       // Branch Prediction Type
 int verbose;
+
+// perceptron parameters
+int numPerceptrons;  // number of perceptron
+uint32_t threshold;
 
 //------------------------------------//
 //      Predictor Data Structures     //
@@ -59,6 +64,7 @@ init_predictor()
       init_tournament();
       break;
     case CUSTOM:
+      init_custom();
       break;
     default:
       break;
@@ -85,6 +91,7 @@ make_prediction(uint32_t pc)
     case TOURNAMENT:
       return make_prediction_tournament(pc);
     case CUSTOM:
+      return make_prediction_custom(pc);
     default:
       break;
   }
@@ -111,6 +118,7 @@ train_predictor(uint32_t pc, uint8_t outcome)
     train_tournament(pc, outcome);
     break;
   case CUSTOM:
+    train_custom(pc, outcome);
     break;
   default:
     break;

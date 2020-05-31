@@ -5,7 +5,7 @@
 uint32_t ghistory_records;
 uint8_t *counter_table;
 
-void add_ghrecord(uint8_t outcome)
+void add_ghrecord_gshare(uint8_t outcome)
 {
   uint32_t ghistory_msk;
   
@@ -64,5 +64,5 @@ void train_gshare(uint32_t pc, uint8_t outcome)
   else
     counter_table[index] = counter <= SN ? counter : counter - 1;
   
-  add_ghrecord(outcome);
+  add_ghrecord_gshare(outcome);
 }
