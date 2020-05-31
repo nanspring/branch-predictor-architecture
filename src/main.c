@@ -47,9 +47,9 @@ handle_option(char *arg)
   } else if (!strncmp(arg,"--tournament:",13)) {
     bpType = TOURNAMENT;
     sscanf(arg+13,"%d:%d:%d", &ghistoryBits, &lhistoryBits, &pcIndexBits);
-  } else if (!strncmp(arg,"--custom",8)) {
+  } else if (!strncmp(arg,"--custom:",9)) {
     bpType = CUSTOM;
-    sscanf(arg+8, "%d:%d:%d", &ghistoryBits, &numPerceptrons, &threshold);
+    sscanf(arg+9, "%d:%d:%d", &ghistoryBits, &numPerceptrons, &threshold);
   } else if (!strcmp(arg,"--verbose")) {
     verbose = 1;
   } else {

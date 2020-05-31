@@ -81,7 +81,7 @@ void train_custom(uint32_t pc, uint8_t outcome)
 	else
 		t = -1;
 
-	perceptron = perceptron_table[pc & numPerceptrons];
+	perceptron = perceptron_table[pc % numPerceptrons];
 	if (sign(last_output)  != t || abs(last_output) <= threshold) {
 		perceptron[0] += t;
 		for (int i = 0; i < ghistoryBits; i++) {
