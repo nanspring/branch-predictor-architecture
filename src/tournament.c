@@ -42,7 +42,7 @@ void init_tournament(){
 
     for (int i = 0; i < gpt_num_counters; i++) {
         gpt[i] = SN;
-        cpt[i] = SN;
+        cpt[i] = 2; //initialize choice table to lean toward ght decision
         
     }
 
