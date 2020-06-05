@@ -12,9 +12,9 @@ int last_output;
 
 static inline void add_ghrecord(uint8_t outcome)
 {
-	uint32_t ghistory_msk;
-  
-  ghistory_msk = (1 << ghistoryBits) - 1;
+	uint64_t ghistory_msk;
+
+  ghistory_msk = ((uint64_t)1 << ghistoryBits) - 1;
   ghistory_records = (ghistory_records << 1) | outcome;
   ghistory_records &= ghistory_msk;
 }
@@ -55,7 +55,7 @@ uint8_t make_prediction_custom(uint32_t pc)
 	output = perceptron[0];
 
 	for (int i = 0; i < ghistoryBits; i++) {
-		input = (((1 << i) & ghistory_records) >> i) ? 1 : -1;
+		input = ((((uint64_t)1 << i) & ghistory_records) >> i) ? 1 : -1;
 		output += perceptron[i + 1] * input;
 	}
 
@@ -93,7 +93,7 @@ void train_custom(uint32_t pc, uint8_t outcome)
 	if (sign(last_output) != t || abs(last_output) <= threshold) {
 		perceptron[0] += t;
 		for (int i = 0; i < ghistoryBits; i++) {
-			input = (((1 << i) & ghistory_records) >> i) > 0 ? 1 : -1;
+			input = ((((uint64_t)1 << i) & ghistory_records) >> i) > 0 ? 1 : -1;
 			perceptron[i + 1] += input * t;
 		}
 	}
