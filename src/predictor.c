@@ -33,7 +33,6 @@ int bpType;       // Branch Prediction Type
 int verbose;
 
 // perceptron parameters
-int numPerceptrons;  // number of perceptron
 uint32_t threshold;
 
 //------------------------------------//

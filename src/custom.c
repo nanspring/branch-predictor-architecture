@@ -21,6 +21,9 @@ static inline void add_ghrecord(uint8_t outcome)
 
 void init_custom()
 {
+	uint32_t numPerceptrons;
+
+	numPerceptrons = 1 << pcIndexBits;
 	ghistory_records = 0;
 	perceptron_table = (int **)malloc(sizeof(int *) * numPerceptrons);
 	if (perceptron_table == NULL) {
@@ -45,12 +48,14 @@ uint8_t make_prediction_custom(uint32_t pc)
 	int *perceptron;
 	int input;
 	int output;
+	uint32_t pc_idx_msk;
 
-	perceptron = perceptron_table[pc % numPerceptrons];
+	pc_idx_msk = (1 << pcIndexBits) - 1;
+	perceptron = perceptron_table[(pc ^ ghistory_records) & pc_idx_msk];
 	output = perceptron[0];
 
 	for (int i = 0; i < ghistoryBits; i++) {
-		input = (((1 << i) & ghistory_records) >> i) > 0 ? 1 : -1;
+		input = (((1 << i) & ghistory_records) >> i) ? 1 : -1;
 		output += perceptron[i + 1] * input;
 	}
 
@@ -75,14 +80,17 @@ void train_custom(uint32_t pc, uint8_t outcome)
 	int *perceptron;
 	int input;
 	int t;
+	uint32_t pc_idx_msk;
+
+	pc_idx_msk = (1 << pcIndexBits) - 1;
 
 	if (outcome == TAKEN)
 		t = 1;
 	else
 		t = -1;
 
-	perceptron = perceptron_table[pc % numPerceptrons];
-	if (sign(last_output)  != t || abs(last_output) <= threshold) {
+	perceptron = perceptron_table[(pc ^ ghistory_records) & pc_idx_msk];
+	if (sign(last_output) != t || abs(last_output) <= threshold) {
 		perceptron[0] += t;
 		for (int i = 0; i < ghistoryBits; i++) {
 			input = (((1 << i) & ghistory_records) >> i) > 0 ? 1 : -1;
