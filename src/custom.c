@@ -22,7 +22,8 @@ static inline void add_ghrecord(uint8_t outcome)
 void init_custom()
 {
 	uint32_t numPerceptrons;
-
+	
+	threshold = 1.93*ghistoryBits + 14;
 	numPerceptrons = 1 << pcIndexBits;
 	ghistory_records = 0;
 	perceptron_table = (int **)malloc(sizeof(int *) * numPerceptrons);
